@@ -1,0 +1,32 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$CLAUDE_PROJECT_DIR/.claude/hooks/goal_check.py\"",
+            "timeout": 900
+          }
+        ]
+      }
+    ]
+  },
+  "permissions": {
+    "allow": [
+      "Bash(make test)",
+      "Bash(make eval)",
+      "Bash(make lint)",
+      "Bash(uv sync)",
+      "Bash(uv run pytest:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(scripts/lane.sh:*)",
+      "Bash(python3 scripts/goal.py:*)",
+      "Bash(python3 scripts/backlog_done.py)"
+    ]
+  }
+}

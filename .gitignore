@@ -1,0 +1,9 @@
+.interview/
+.worktrees/
+.harness/
+.venv/
+__pycache__/
+.pytest_cache/
+traces/
+evals/results/
+.env

@@ -1,0 +1,39 @@
+name: test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Lint
+        run: make lint
+
+      - name: Tests (fake LLM, no network)
+        run: make test
+
+      - name: Eval pipeline smoke test
+        run: make eval-smoke
+
+      - name: Installer works on an empty project
+        run: |
+          git config --global user.email "ci@example.com"
+          git config --global user.name "ci"
+          mkdir /tmp/new-project
+          python3 scripts/install.py /tmp/new-project
+          cd /tmp/new-project && uv sync && make test
